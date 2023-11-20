@@ -22,6 +22,11 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         await _dbSet.AddAsync(entity);
     }
 
+    public async Task AddRangeAsync(IEnumerable<T> entities)
+    {
+        await _dbSet.AddRangeAsync(entities);
+    }
+
     public void Delete(T entity)
     {
         _dbSet.Remove(entity);
@@ -45,5 +50,10 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     public async Task<T> GetByIdAsync(int id)
     {
         return await _dbSet.FindAsync(id);
+    }
+
+    public void Update(T entity)
+    {
+        _dbSet.Update(entity);
     }
 }

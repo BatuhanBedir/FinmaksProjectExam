@@ -10,7 +10,7 @@ namespace ExamProject.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController : CustomBaseController
 {
 
     private readonly ILoginService _loginService;
@@ -24,13 +24,16 @@ public class AuthController : ControllerBase
     {
         var response = await _loginService.TokenHandler(appUserLoginDto);
 
-        return Ok(response.Data);
+        return CreateActionResultInstance(response);
     }
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer")]
     public IActionResult GetLoggedInUserRole()
     {
         var role = User.FindFirstValue("Role");
-        return Ok(role);
+
+        var response = CustomResponseDto<string>.Success(role, 200);
+
+        return CreateActionResultInstance(response);
     }
 }

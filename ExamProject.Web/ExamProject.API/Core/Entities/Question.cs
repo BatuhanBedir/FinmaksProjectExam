@@ -7,7 +7,7 @@ public class Question : BaseEntity
         Choices = new HashSet<Choice>();
     }
 
-    public string QuestionText = null!;
+    public string QuestionContent { get; set; } = null!;
 
     //Nav.Prop.
     public int ExamId { get; set; }

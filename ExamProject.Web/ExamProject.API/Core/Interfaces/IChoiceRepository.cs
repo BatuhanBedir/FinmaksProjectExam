@@ -2,6 +2,6 @@
 
 namespace ExamProject.API.Core.Interfaces;
 
-public interface IChoiceRepository : IRepository<Question>
+public interface IChoiceRepository : IRepository<Choice>
 {
 }

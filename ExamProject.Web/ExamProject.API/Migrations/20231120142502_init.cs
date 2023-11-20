@@ -175,19 +175,20 @@ namespace ExamProject.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExamId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Exams_ExamId",
+                        name: "FK_Questions_Exams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "Exams",
                         principalColumn: "Id",
@@ -195,7 +196,7 @@ namespace ExamProject.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Choice",
+                name: "Choices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -207,11 +208,11 @@ namespace ExamProject.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Choice", x => x.Id);
+                    table.PrimaryKey("PK_Choices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Choice_Question_QuestionId",
+                        name: "FK_Choices_Questions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "Question",
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -228,7 +229,7 @@ namespace ExamProject.API.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "d0b81415-adc3-401a-9db6-5d567dc526d4", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEDjlnD7mYEv+opsU1oZ/E1twxAyXCbaCEoIy1G2T7rn1oZs2Cb9HQ49jTh2yngy+NA==", null, false, null, false, "admin@admin.com" });
+                values: new object[] { 1, 0, "b969b127-e99a-46ee-b12d-3553ece9304d", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAENS5qnFHiFKL6uSyL+ctydbShKd8U4dCpKLv38M9SpxAtza81OUP62/DcuQw413mXw==", null, false, null, false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -270,13 +271,13 @@ namespace ExamProject.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Choice_QuestionId",
-                table: "Choice",
+                name: "IX_Choices_QuestionId",
+                table: "Choices",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_ExamId",
-                table: "Question",
+                name: "IX_Questions_ExamId",
+                table: "Questions",
                 column: "ExamId");
         }
 
@@ -299,7 +300,7 @@ namespace ExamProject.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Choice");
+                name: "Choices");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -308,7 +309,7 @@ namespace ExamProject.API.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Exams");

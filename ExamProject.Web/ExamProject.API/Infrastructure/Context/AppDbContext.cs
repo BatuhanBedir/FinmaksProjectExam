@@ -12,7 +12,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
     }
     public DbSet<Exam> Exams { get; set; }
-    public DbSet<Question> Choices { get; set; }
+    public DbSet<Choice> Choices { get; set; }
     public DbSet<Question> Questions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -57,5 +57,21 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
             RoleId = 1,
             UserId = 1,
         });
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var datas = ChangeTracker.Entries<BaseEntity>();
+
+        foreach (var data in datas)
+        {
+            _ = data.State switch
+            {
+                EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
+                _ => DateTime.Now
+            };
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

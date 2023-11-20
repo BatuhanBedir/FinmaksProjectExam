@@ -2,5 +2,5 @@
 
 public interface IUnitOfWork : IDisposable
 {
-    Task SaveAsnyc();
+    Task SaveAsync();
 }

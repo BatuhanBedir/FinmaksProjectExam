@@ -1,0 +1,20 @@
+﻿@model List<ArticleVm>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="col">Article Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row"><a href="#" onclick="GetArticleContent('@item.Title','@item.Content')">@item.Title</a></th>
+                @* <th scope="row" hidden><a href="#">@item.Link</a></th>
+            <th scope="row"  hidden><a href="#">@item.Content</a></th> *@
+            </tr>
+        }
+    </tbody>
+</table>

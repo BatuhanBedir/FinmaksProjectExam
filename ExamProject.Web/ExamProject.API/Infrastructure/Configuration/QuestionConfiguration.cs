@@ -10,5 +10,6 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
     {
         builder.HasKey(x => x.Id);
         builder.HasMany(x => x.Choices).WithOne(x => x.Question).HasForeignKey(x => x.QuestionId);
+        builder.Property(x => x.QuestionContent).IsRequired();
     }
 }

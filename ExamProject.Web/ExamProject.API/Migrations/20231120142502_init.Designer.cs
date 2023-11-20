@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamProject.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231119200855_init")]
+    [Migration("20231120142502_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -141,12 +141,12 @@ namespace ExamProject.API.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d0b81415-adc3-401a-9db6-5d567dc526d4",
+                            ConcurrencyStamp = "b969b127-e99a-46ee-b12d-3553ece9304d",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDjlnD7mYEv+opsU1oZ/E1twxAyXCbaCEoIy1G2T7rn1oZs2Cb9HQ49jTh2yngy+NA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENS5qnFHiFKL6uSyL+ctydbShKd8U4dCpKLv38M9SpxAtza81OUP62/DcuQw413mXw==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
@@ -178,7 +178,7 @@ namespace ExamProject.API.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Choice");
+                    b.ToTable("Choices");
                 });
 
             modelBuilder.Entity("ExamProject.API.Core.Entities.Exam", b =>
@@ -215,11 +215,15 @@ namespace ExamProject.API.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
+                    b.Property<string>("QuestionContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ExamId");
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

@@ -2,11 +2,9 @@
 using ExamProject.API.Application.Providers;
 using ExamProject.API.Application.Services;
 using ExamProject.API.Application.Settings;
-using ExamProject.API.Core.Entities;
-using ExamProject.API.Infrastructure.Context;
+using ExamProject.API.Core.Interfaces;
+using ExamProject.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -35,10 +33,13 @@ public static class DependencyInjection
                 };
             });
 
+        services.AddScoped<IExamService, ExamService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ILoginService, LoginService>();
         services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+        services.AddScoped<IRssService, RssService>();
 
         return services;
-        
+
     }
 }
