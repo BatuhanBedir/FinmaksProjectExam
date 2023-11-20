@@ -8,7 +8,9 @@ using System.Security.Claims;
 
 namespace ExamProject.API.Controllers;
 
-public class AuthController : CustomBaseController
+[Route("api/[controller]")]
+[ApiController]
+public class AuthController : ControllerBase
 {
 
     private readonly ILoginService _loginService;
@@ -18,11 +20,11 @@ public class AuthController : CustomBaseController
         _loginService = loginService;
     }
     [HttpPost]
-    public async Task<IActionResult> Login(AppUserLoginDto appUserLoginDto)
+    public async Task<IActionResult> Login([FromForm] AppUserLoginDto appUserLoginDto)
     {
         var response = await _loginService.TokenHandler(appUserLoginDto);
 
-        return CreateActionResultInstance(response);
+        return Ok(response.Data);
     }
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer")]
