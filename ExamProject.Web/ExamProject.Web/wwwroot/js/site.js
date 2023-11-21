@@ -120,10 +120,16 @@ function GetArticleListPartial(response) {
         GoToAccountLogin();
     }
 }
-function GetArticleContent(title, content) {
-    var role = sessionStorage.getItem("role")
-    if (role === "admin") {
 
+function GetSelectedArticleContent() {
+    var content = document.getElementById("articleTitle").value;
+
+    if (content === '') {
+        document.getElementById("articleContentDiv").innerHTML = "";
+        return;
+    }
+    var role = sessionStorage.getItem("role");
+    if (role === "admin") {
         var myUrl = "/Exam/GetArticlePartial";
         $.ajax({
             url: myUrl,
@@ -132,9 +138,9 @@ function GetArticleContent(title, content) {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")
             },
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ title: title, content: content }),
+            data: JSON.stringify({ content: content }), 
             success: function (result) {
-                $("#letMeSee").html(result);
+                $("#articleContentDiv").html(result);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
@@ -142,10 +148,6 @@ function GetArticleContent(title, content) {
             }
         });
     }
-    else {
-        GoToAccountLogin();
-    }
-
 }
 function CreateExam() {
     var role = sessionStorage.getItem("role")

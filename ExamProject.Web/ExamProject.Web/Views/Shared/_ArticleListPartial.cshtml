@@ -1,20 +1,38 @@
 ﻿@model List<ArticleVm>
 
-<table class="table">
+<form>
+    <label for="articleTitle">Select Article:</label>
+    <select id="articleTitle" class="form-control" onchange="GetSelectedArticleContent()">
+        <option value="">-- Select Article --</option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.Content">@item.Title</option>
+        }
+    </select>
+
+    <div id="articleContentDiv">
+        <!-- Content will be displayed here -->
+    </div>
+</form>
+
+@* onchange="GetSelectedArticleContent()" *@
+@*  <table class="table">
     <thead>
         <tr>
-            <th class="col">Article Name</th>
+            <th class="col">Article</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+
+         @foreach (var item in Model)
         {
-            <tr>
+
+
+        <tr>
                 <th scope="row"><a href="#" onclick="GetArticleContent('@item.Title','@item.Content')">@item.Title</a></th>
-                @* <th scope="row" hidden><a href="#">@item.Link</a></th>
-            <th scope="row"  hidden><a href="#">@item.Content</a></th> *@
+
             </tr>
         }
     </tbody>
-</table>
+</table>  *@
