@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddScoped<ILoginService, LoginService>();
         services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
         services.AddScoped<IRssService, RssService>();
+        services.AddAutoMapper(typeof(DependencyInjection));
 
         return services;
 

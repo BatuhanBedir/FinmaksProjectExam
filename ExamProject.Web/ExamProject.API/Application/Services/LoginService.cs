@@ -22,6 +22,10 @@ namespace ExamProject.API.Application.Services
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(loginDto.UserName) || string.IsNullOrWhiteSpace(loginDto.Password))
+                {
+                    return CustomResponseDto<string>.Fail($"User Name and Password is required", HttpStatusCode.BadRequest.GetHashCode());
+                }
                 var user = await _signInManager.UserManager.FindByNameAsync(loginDto.UserName);
 
                 if (user is null) return CustomResponseDto<string>.Fail("username or password is wrong", HttpStatusCode.NotFound.GetHashCode());

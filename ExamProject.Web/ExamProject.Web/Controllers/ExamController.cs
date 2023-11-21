@@ -23,4 +23,9 @@ public class ExamController : Controller
     {
         return PartialView("_ArticlePartial", content);
     }
+    [HttpPost]
+    public IActionResult GetExamListPartial()
+    {
+        return PartialView();
+    }
 }

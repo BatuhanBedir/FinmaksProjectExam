@@ -31,4 +31,11 @@ public class ExamController : CustomBaseController
     {
         return CreateActionResultInstance(await _examService.CreateExam(examDto));
     }
+
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetAllExam()
+    {
+        var a = await _examService.GetAllExamIncludeQuestionAndChoiceAsync();
+        return Ok(a);
+    }
 }

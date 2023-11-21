@@ -60,7 +60,8 @@ namespace ExamProject.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -229,12 +230,20 @@ namespace ExamProject.API.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "b969b127-e99a-46ee-b12d-3553ece9304d", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAENS5qnFHiFKL6uSyL+ctydbShKd8U4dCpKLv38M9SpxAtza81OUP62/DcuQw413mXw==", null, false, null, false, "admin@admin.com" });
+                values: new object[,]
+                {
+                    { 1, 0, "4c5a7bb0-1c5e-440e-9a8e-0d4df4845b91", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAECk1Iixob+y6nG+1TZOEBsbwqEliHLzsEqzAWwp8YgxhpkdqxpIl9RzjKo2A94+UbQ==", null, false, null, false, "admin@admin.com" },
+                    { 2, 0, "2e85ba00-720a-4111-9298-3f5671da80e6", "user@user.com", true, false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEBvc0df5rl19+I5n4hTxmJr5Y1ik33LpbWBxxccrtv+J0yC2CFk5jaslmv9AT3/AVQ==", null, false, null, false, "user@user.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

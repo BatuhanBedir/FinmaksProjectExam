@@ -18,10 +18,16 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        string adminUserName = "admin@admin.com";
-        string adminRoleName = "admin";
-        string password = "Mm12345.";
-        string userRoleName = "user";
+        SeedAdmin(builder);
+
+    }
+    private void SeedAdmin(ModelBuilder builder)
+    {
+        const string adminUserName = "admin@admin.com";
+        const string userUserName = "user@user.com";
+        const string adminRoleName = "admin";
+        const string userRoleName = "user";
+        const string password = "Mm12345.";
 
         builder.Entity<AppRole>().HasData(new AppRole
         {
@@ -36,7 +42,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
             NormalizedName = userRoleName.ToUpper()
         });
 
-        var appUser = new AppUser
+        var appAdmin = new AppUser
         {
             Id = 1,
             Email = adminUserName,
@@ -44,10 +50,22 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
             UserName = adminUserName,
             NormalizedUserName = adminUserName.ToUpper(),
         };
+        var appUser = new AppUser
+        {
+            Id = 2,
+            Email = userUserName,
+            EmailConfirmed = true,
+            UserName = userUserName,
+            NormalizedUserName = userUserName.ToUpper(),
+        };
+
 
         PasswordHasher<AppUser> ph = new();
+        appAdmin.PasswordHash = ph.HashPassword(appAdmin, password);
+
         appUser.PasswordHash = ph.HashPassword(appUser, password);
 
+        builder.Entity<AppUser>().HasData(appAdmin);
         builder.Entity<AppUser>().HasData(appUser);
 
         builder.Entity<IdentityUserLogin<int>>().HasKey(x => x.UserId);
@@ -56,6 +74,11 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
         {
             RoleId = 1,
             UserId = 1,
+        });
+        builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>
+        {
+            RoleId = 2,
+            UserId = 2,
         });
     }
 

@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Login";
 }
+<style>
+    #loginFail {
+        color: red;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
@@ -12,16 +17,17 @@
                 <form method="post">
                     <div class="mb-3">
                         <label asp-for="UserName" class="form-label"></label>
-                        <input asp-for="UserName" type="email" class="form-control" id="username" aria-describedby="emailHelp">
+                        <input asp-for="UserName" type="email" class="form-control" required id="username" aria-describedby="emailHelp">
                         <span class="text-danger" asp-validation-for="UserName"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" type="password" id="password" class="form-control">
+                        <input asp-for="Password" required type="password" id="password" class="form-control">
                         <span class="text-danger" asp-validation-for="Password"></span>
                     </div>
                     <a class="btn btn-outline-primary" onclick="Login()">Login</a>
                 </form>
+                <div id="loginFail"></div>
             </div>
         </div>
     </div>

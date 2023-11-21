@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamProject.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231120142502_init")]
+    [Migration("20231121134705_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -141,15 +141,29 @@ namespace ExamProject.API.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b969b127-e99a-46ee-b12d-3553ece9304d",
+                            ConcurrencyStamp = "4c5a7bb0-1c5e-440e-9a8e-0d4df4845b91",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENS5qnFHiFKL6uSyL+ctydbShKd8U4dCpKLv38M9SpxAtza81OUP62/DcuQw413mXw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECk1Iixob+y6nG+1TZOEBsbwqEliHLzsEqzAWwp8YgxhpkdqxpIl9RzjKo2A94+UbQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2e85ba00-720a-4111-9298-3f5671da80e6",
+                            Email = "user@user.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBvc0df5rl19+I5n4hTxmJr5Y1ik33LpbWBxxccrtv+J0yC2CFk5jaslmv9AT3/AVQ==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "user@user.com"
                         });
                 });
 
@@ -189,10 +203,14 @@ namespace ExamProject.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -312,6 +330,11 @@ namespace ExamProject.API.Migrations
                         {
                             UserId = 1,
                             RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
                         });
                 });
 
