@@ -101,4 +101,23 @@ public class ExamService : IExamService
             return CustomResponseDto<bool>.Fail($"An error occurred: {ex.Message}", HttpStatusCode.InternalServerError.GetHashCode());
         }
     }
+
+    public async Task<CustomResponseDto<ExamDto>> GetByIdExamIncludeQuestionAndChoiceAsync(int id)
+    {
+        try
+        {
+            var exams = await _examRepository.GetByIdExamIncludeQuestionAndChoiceAsync(id);
+
+            if (exams is null) return CustomResponseDto<ExamDto>.Fail("not found", HttpStatusCode.NotFound.GetHashCode());
+
+            var examDto = _mapper.Map<ExamDto>(exams);
+
+            return CustomResponseDto<ExamDto>.Success(examDto, HttpStatusCode.OK.GetHashCode());
+        }
+        catch (Exception ex)
+        {
+
+            return CustomResponseDto<ExamDto>.Fail($"An error occurred: {ex.Message}", HttpStatusCode.InternalServerError.GetHashCode());
+        }
+    }
 }

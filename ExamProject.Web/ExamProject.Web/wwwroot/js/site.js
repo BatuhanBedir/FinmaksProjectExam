@@ -294,6 +294,40 @@ function DeleteExam(id) {
 
     });
 }
-function TakeTheExam(id) {
 
+function TakeTheExam(id) {
+    var myUrl = baseUrl + "Exam/" + id;
+    $.ajax({
+        url: myUrl,
+        type: "GET",
+        headers: {
+            "Authorization": 'Bearer ' + sessionStorage.getItem("token")
+        },
+        success: function (response) {
+            UserExamList(response.data);
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+
+    });
+}
+
+function UserExamList(exams) {
+    var myUrl = "/Exam/GetUserExamListPartial";
+
+    $.ajax({
+        url: myUrl,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(exams),
+        success: function (response) {
+            $("#letMeSee").html(response);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+
+    });
 }

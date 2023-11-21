@@ -11,8 +11,8 @@ public class ExamRepository : Repository<Exam>, IExamRepository
     {
     }
 
-    public async Task<List<Exam>> GetByIdExamIncludeQuestionAndChoiceAsync(int id)
+    public async Task<Exam> GetByIdExamIncludeQuestionAndChoiceAsync(int id)
     {
-        return await _context.Exams.Where(x => x.Id == id).Include(x => x.Questions).ThenInclude(x => x.Choices).ToListAsync() ;
+        return await _context.Exams.Where(x => x.Id == id).Include(x => x.Questions).ThenInclude(x => x.Choices).FirstOrDefaultAsync() ;
     }
 }

@@ -46,4 +46,11 @@ public class ExamController : CustomBaseController
     {
         return CreateActionResultInstance(await _examService.DeleteExam(id));
     }
+
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdExam(int id)
+    {
+        return CreateActionResultInstance(await _examService.GetByIdExamIncludeQuestionAndChoiceAsync(id));
+    }
 }

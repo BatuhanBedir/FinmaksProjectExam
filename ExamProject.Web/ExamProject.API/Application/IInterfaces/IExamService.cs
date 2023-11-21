@@ -7,4 +7,5 @@ public interface IExamService
     Task<CustomResponseDto<ExamDto>> CreateExam(ExamDto examDto);
     Task<CustomResponseDto<List<GetExamDto>>> GetAllExam();
     Task<CustomResponseDto<bool>> DeleteExam(int id);
+    Task<CustomResponseDto<ExamDto>> GetByIdExamIncludeQuestionAndChoiceAsync(int id);
 }
