@@ -6,7 +6,7 @@
         <option value="">-- Select Article --</option>
         @foreach (var item in Model)
         {
-            <option value="@item.Content">@item.Title</option>
+            <option id="title" value="@item.Title|@item.Content">@item.Title</option>
         }
     </select>
 

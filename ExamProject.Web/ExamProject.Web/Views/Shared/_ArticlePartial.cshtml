@@ -55,35 +55,34 @@
 <p id="content">@Model.Content</p>
 <hr />
 
-<form id="questionForm">
-    <div class="question-container">
+<div class="question-container">
 
-        @for (int i = 1; i < 5; i++)
-        {
-            <div class="question">
-                <label class="row" for="question@(i)"><b>Question @i :</b></label>
-                <textarea id="question@(i)" name="question@(i)" placeholder="Your question..." style="width: 80%;"></textarea>
-                <br>
+    @for (int i = 1; i < 5; i++)
+    {
+        <div class="question">
+            <label class="row" for="question@(i)"><b>Question @i :</b></label>
+            <textarea id="question@(i)" name="question@(i)" placeholder="Your question..." style="width: 80%;"></textarea>
+            <br>
 
-                <br>
+            <br>
 
-                <input type="text" id="option@(i)_1" class="answer-option" placeholder="A">
-                <input type="text" id="option@(i)_2" class="answer-option" placeholder="B">
-                <input type="text" id="option@(i)_3" class="answer-option" placeholder="C">
-                <input type="text" id="option@(i)_4" class="answer-option" placeholder="D">
-                <br>
-                <br>
-                <!-- Doğru Cevap Alanı -->
-                <label for="correct-answer">Correct Answer :</label>
-                <input type="text" id="correct-answer@(i)" placeholder="Answer Choice">
-                <br>
-            </div>
-            <br />
-            <hr />
-        }
-        <!-- Diğer Sorular -->
-        <!-- ... -->
+            <input type="text" id="option@(i)_1" class="answer-option" placeholder="A">
+            <input type="text" id="option@(i)_2" class="answer-option" placeholder="B">
+            <input type="text" id="option@(i)_3" class="answer-option" placeholder="C">
+            <input type="text" id="option@(i)_4" class="answer-option" placeholder="D">
+            <br>
+            <br>
+            <!-- Doğru Cevap Alanı -->
+            <label for="correct-answer">Correct Answer :</label>
+            <input type="text" id="correct-answer@(i)" placeholder="Answer Choice">
+            <br>
+        </div>
+        <br />
+        <hr />
+    }
+    <!-- Diğer Sorular -->
+    <!-- ... -->
 
-    </div>
-    <button onclick="CreateExam()" class="btn btn-primary">Create Exam</button>
-</form>
+</div>
+<button onclick="CreateExam()" class="btn btn-primary">Create Exam</button>
+

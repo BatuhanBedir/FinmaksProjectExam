@@ -120,9 +120,14 @@ function GetArticleListPartial(response) {
         GoToAccountLogin();
     }
 }
-
 function GetSelectedArticleContent() {
     var content = document.getElementById("articleTitle").value;
+
+    var select = document.getElementById("articleTitle");
+    var selectedValue = select.options[select.selectedIndex].value;
+
+    var values = selectedValue.split('|');
+    var content = values[1];
 
     if (content === '') {
         document.getElementById("articleContentDiv").innerHTML = "";
@@ -198,7 +203,14 @@ function CreateExam() {
 
             formDataArray.push(questionDto);
         }
-        var articleTitle = $("#title").text();
+
+        var select = document.getElementById("articleTitle");
+        var selectedValue = select.options[select.selectedIndex].value;
+
+        var values = selectedValue.split('|');
+        var articleTitle = values[0];
+
+        //var articleTitle = $("#title").text();
         var articleContent = $("#content").text();
         var examDto = {
             questions: formDataArray,
