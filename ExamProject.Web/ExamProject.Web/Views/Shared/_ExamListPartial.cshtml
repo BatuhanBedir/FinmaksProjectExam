@@ -1,1 +1,41 @@
-﻿
+﻿@model ExamListVm
+@{
+    int count = 1;
+}
+@if (Model.Role == "admin")
+{
+    <p>
+        <a id="Create" class="btn btn-outline-primary" onclick="GetArticleList()">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Create Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Exams)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td>@item.Title</td>
+                <td>@item.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                @if(Model.Role == "admin")
+                {
+                    <td><a class="btn btn-outline-primary" onclick='DeleteExam("@item.Id")'>Delete</a></td>
+                }
+                @if(Model.Role == "user")
+                {
+                    <td><a class="btn btn-outline-primary" onclick='TakeTheExam("@item.Id")'>Take The Exam</a></td>
+                }
+            </tr>
+
+            count++;
+        }
+    </tbody>
+</table>

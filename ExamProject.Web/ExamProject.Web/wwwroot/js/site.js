@@ -3,9 +3,10 @@
 
 $(document).ready(function () {
     if (window.location == "https://localhost:7050/Exam/Index") {
-        GetArticleList();
+        ExamList();
     }
 });
+
 function GoToExamIndex() {
     window.location.href = "/Exam/Index";
 }
@@ -143,7 +144,7 @@ function GetSelectedArticleContent() {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")
             },
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ content: content }), 
+            data: JSON.stringify({ content: content }),
             success: function (result) {
                 $("#articleContentDiv").html(result);
             },
@@ -226,7 +227,8 @@ function CreateExam() {
             data: JSON.stringify(examDto),
             contentType: 'application/json',
             success: function (data) {
-                GoToExamIndex();
+                console.log(ExamList());
+                ExamList();
             },
             error: function (error) {
                 console.log(error);
@@ -235,4 +237,63 @@ function CreateExam() {
     } else {
         GoToAccountLogin();
     }
+}
+function ExamList() {
+    var myUrl = baseUrl + "Exam/GetAllExam";
+    $.ajax({
+        url: myUrl,
+        type: "GET",
+        headers: {
+            "Authorization": 'Bearer ' + sessionStorage.getItem("token")
+        },
+        success: function (response) {
+            GetExamListPartial(response.data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+    });
+}
+function GetExamListPartial(exams) {
+    var myUrl = "/Exam/GetExamListPartial";
+    var role = sessionStorage.getItem("role")
+
+    var requestData = {
+        exams: exams,
+        role: role
+    };
+    $.ajax({
+        url: myUrl,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(requestData),
+        success: function (response) {
+            $("#letMeSee").html(response);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+    });
+}
+function DeleteExam(id) {
+    var myUrl = baseUrl + "Exam/" + id;
+    $.ajax({
+        url: myUrl,
+        type: "DELETE",
+        success: function (data, textSatus, xhr) {
+            if (xhr.status == 200) {
+                ExamList();
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+
+    });
+}
+function TakeTheExam(id) {
+
 }

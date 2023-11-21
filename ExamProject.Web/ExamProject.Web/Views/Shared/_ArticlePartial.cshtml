@@ -51,8 +51,7 @@
 </head>
 
 <hr />
-
-<p id="content">@Model.Content</p>
+<p id="content">@Html.Raw(Model.Content)</p>
 <hr />
 
 <div class="question-container">
@@ -84,5 +83,5 @@
     <!-- ... -->
 
 </div>
-<button onclick="CreateExam()" class="btn btn-primary">Create Exam</button>
+<button type="button" onclick="CreateExam()" class="btn btn-primary">Create Exam</button>
 

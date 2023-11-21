@@ -29,13 +29,21 @@ public class ExamController : CustomBaseController
     [HttpPost]
     public async Task<IActionResult> CreateExam([FromBody] ExamDto examDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
         return CreateActionResultInstance(await _examService.CreateExam(examDto));
     }
 
     [HttpGet("[action]")]
     public async Task<IActionResult> GetAllExam()
     {
-        var a = await _examService.GetAllExamIncludeQuestionAndChoiceAsync();
-        return Ok(a);
+        return CreateActionResultInstance(await _examService.GetAllExam());
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteExam(int id)
+    {
+        return CreateActionResultInstance(await _examService.DeleteExam(id));
     }
 }

@@ -64,14 +64,41 @@ public class ExamService : IExamService
         }
     }
 
-    public async Task<CustomResponseDto<List<ExamDto>>> GetAllExamIncludeQuestionAndChoiceAsync()
+    public async Task<CustomResponseDto<List<GetExamDto>>> GetAllExam()
     {
-        var exam = await _examRepository.GetAllExamIncludeQuestionAndChoiceAsync();
+        try
+        {
+            var exam = await _examRepository.GetAllAsync();
 
-        var examDtos = _mapper.Map<List<ExamDto>>(exam);
+            var examDtos = _mapper.Map<List<GetExamDto>>(exam);
 
-        return CustomResponseDto<List<ExamDto>>.Success(examDtos, HttpStatusCode.OK.GetHashCode());
+            return CustomResponseDto<List<GetExamDto>>.Success(examDtos, HttpStatusCode.OK.GetHashCode());
+        }
+        catch (Exception ex)
+        {
+            return CustomResponseDto<List<GetExamDto>>.Fail($"An error occurred: {ex.Message}", HttpStatusCode.InternalServerError.GetHashCode());
+        }
 
 
+    }
+
+    public async Task<CustomResponseDto<bool>> DeleteExam(int id)
+    {
+        try
+        {
+            var exam = await _examRepository.GetByIdAsync(id);
+
+            if (exam is null) return CustomResponseDto<bool>.Fail("exam not found", HttpStatusCode.NotFound.GetHashCode());
+
+            _examRepository.Delete(exam);
+            await _unitOfWork.SaveAsync();
+
+            return CustomResponseDto<bool>.Success(HttpStatusCode.OK.GetHashCode());
+        }
+        catch (Exception ex)
+        {
+
+            return CustomResponseDto<bool>.Fail($"An error occurred: {ex.Message}", HttpStatusCode.InternalServerError.GetHashCode());
+        }
     }
 }

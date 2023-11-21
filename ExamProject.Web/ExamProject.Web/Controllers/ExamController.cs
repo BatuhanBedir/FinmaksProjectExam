@@ -1,6 +1,7 @@
 ﻿using ExamProject.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace ExamProject.Web.Controllers;
 
@@ -13,9 +14,6 @@ public class ExamController : Controller
     [HttpPost]
     public IActionResult GetArticleListPartial([FromBody] List<ArticleVm> articles)
     {
-        //var model = JsonConvert.DeserializeObject<ArticleListVm>(jsonData);
-
-        //HttpContext.Session.SetString("Role", articles.First().LoggedInUserRole);
         return PartialView("_ArticleListPartial", articles);
     }
     [HttpPost]
@@ -24,8 +22,9 @@ public class ExamController : Controller
         return PartialView("_ArticlePartial", content);
     }
     [HttpPost]
-    public IActionResult GetExamListPartial()
+    public IActionResult GetExamListPartial([FromBody] ExamListVm examListVm)
     {
-        return PartialView();
+        return PartialView("_ExamListPartial", examListVm);
     }
+
 }
