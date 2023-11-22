@@ -1,4 +1,123 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h2, h5 {
+            font-family: 'Lato', sans-serif;
+            color: #ffffff;
+        }
+
+        .question-block {
+            background-color: #1e1e1e;
+            border: 1px solid #333333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .option-button {
+            background-color: #333333;
+            color: #ffffff;
+            margin: 5px 0;
+            border: 1px solid #555555;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+            .option-button:hover {
+                background-color: #474747;
+                transform: scale(1.02);
+            }
+
+            .option-button.selected {
+                background-color: #0056b3;
+                border-color: #004088;
+            }
+
+        .complete-button {
+            background-color: #388e3c;
+            border-color: #2e7d32;
+        }
+
+            .complete-button:hover {
+                background-color: #2e7d32;
+            }
+
+        .option-button.correct-answer {
+            background-color: #81c784;
+            color: white;
+            border-color: #66bb6a;
+        }
+
+        .result span {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body class="container py-5">
+    <h2 class="text-center mb-4">@Model.Title</h2>
+    <p class="exam-content">@Model.Content</p>
+
+    <div id="questions" class="row">
+        @foreach (var question in Model.Questions)
+        {
+            <div class="col-md-6">
+                <div class="question-block" data-correct-answer="@question.CorrectAnswer">
+                    <h5 class="question">@question.Question</h5>
+                    <div class="options d-grid gap-2">
+                        <button type="button" class="option-button btn btn-light">A. @question.Option1</button>
+                        <button type="button" class="option-button btn btn-light">B. @question.Option2</button>
+                        <button type="button" class="option-button btn btn-light">C. @question.Option3</button>
+                        <button type="button" class="option-button btn btn-light">D. @question.Option4</button>
+                    </div>
+                    <div class="result mt-3" style="display: none;"></div>
+                </div>
+            </div>
+        }
+    </div>
+    <button id="complete-exam" class="complete-button btn btn-lg btn-block mt-4">Finish The Exam</button>
+
+    <script>
+        document.querySelectorAll('.option-button').forEach(button => {
+            button.addEventListener('click', function () {
+                this.parentElement.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        document.getElementById("complete-exam").addEventListener("click", function () {
+            document.querySelectorAll(".question-block").forEach(function (questionBlock) {
+                const correctAnswer = questionBlock.getAttribute("data-correct-answer");
+                const selectedOption = questionBlock.querySelector('.option-button.selected');
+                const resultDiv = questionBlock.querySelector(".result");
+
+                questionBlock.querySelectorAll('.option-button').forEach(btn => {
+                    if (btn.innerText.substring(3).trim() === correctAnswer.trim()) {
+                        btn.classList.add('correct-answer');
+                    }
+                });
+
+                if (selectedOption) {
+                    const isCorrect = selectedOption.innerText.substring(3).trim() === correctAnswer.trim();
+                    resultDiv.innerHTML = isCorrect ? "<span style='color: limegreen;'>Doğru</span>" : "<span style='color: red;'>Yanlış</span>";
+                }
+                resultDiv.style.display = 'block';
+            });
+        });
+
+    </script>
+</body>
+</html>

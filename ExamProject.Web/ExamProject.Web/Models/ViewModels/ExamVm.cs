@@ -9,7 +9,7 @@ public record QuestionVm
     public string Option4 { get; set; } = null!;
     public string CorrectAnswer { get; set; } = null!;
 }
-public class ExamVm
+public record ExamVm
 {
     public int Id { get; set; }
     public string Title { get; set; } = null!;
