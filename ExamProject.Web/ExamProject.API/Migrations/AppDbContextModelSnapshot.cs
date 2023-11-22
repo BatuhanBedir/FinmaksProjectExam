@@ -138,12 +138,12 @@ namespace ExamProject.API.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4c5a7bb0-1c5e-440e-9a8e-0d4df4845b91",
+                            ConcurrencyStamp = "593656a3-36dd-438b-a952-2dfc28f85a5a",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECk1Iixob+y6nG+1TZOEBsbwqEliHLzsEqzAWwp8YgxhpkdqxpIl9RzjKo2A94+UbQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED1xR3wOcxAkH7WTnhlaSGM1mPZR0MgpxcMzq8jKRzhIk6llE8928TZrJcHPUbQJpg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
@@ -152,12 +152,12 @@ namespace ExamProject.API.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e85ba00-720a-4111-9298-3f5671da80e6",
+                            ConcurrencyStamp = "04b78b73-44f6-46f3-b6eb-df8bc62490eb",
                             Email = "user@user.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@USER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBvc0df5rl19+I5n4hTxmJr5Y1ik33LpbWBxxccrtv+J0yC2CFk5jaslmv9AT3/AVQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOT72H+52B0R+eI151HxuxwSnijDVcOAW71Tq8hZH8H1HqeoHl9ypDzW324JA4EDbQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "user@user.com"

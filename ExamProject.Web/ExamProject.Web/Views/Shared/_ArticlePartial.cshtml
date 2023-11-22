@@ -1,87 +1,100 @@
 ﻿@model GetContentVm
-<head>
 
     <style>
-
         body {
-            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
             margin: 20px;
         }
 
-        h3 {
-            font-size: 1.2em;
-        }
-
         .question-container {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .question {
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 10px;
         }
 
-        .answer-option {
-            margin-right: 10px;
-            width: 200px;
+            .question label, .correct-answer-container label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+        textarea, .answer-option, select {
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
             padding: 8px;
             font-size: 14px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        label {
-            display: inline-block;
-            width: 120px;
-            text-align: right;
-            margin-right: 10px;
+        .btn-primary {
+            background-color: #388e3c;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: #ffffff;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
         }
 
-        #correct-answer {
-            width: 300px;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        textarea {
-            width: 80%;
-            height: 100px;
-            padding: 8px;
-            font-size: 14px;
-        }
+            .btn-primary:hover {
+                background-color: #2e7d32;
+            }
     </style>
-</head>
 
-<hr />
-<p id="content">@Html.Raw(Model.Content)</p>
-<hr />
-
-<div class="question-container">
-
-    @for (int i = 1; i < 5; i++)
-    {
-        <div class="question">
-            <label class="row" for="question@(i)"><b>Question @i :</b></label>
-            <textarea id="question@(i)" name="question@(i)" placeholder="Your question..." style="width: 80%;"></textarea>
-            <br>
-
-            <br>
-
-            <input type="text" id="option@(i)_1" class="answer-option" placeholder="A">
-            <input type="text" id="option@(i)_2" class="answer-option" placeholder="B">
-            <input type="text" id="option@(i)_3" class="answer-option" placeholder="C">
-            <input type="text" id="option@(i)_4" class="answer-option" placeholder="D">
-            <br>
-            <br>
-            <!-- Doğru Cevap Alanı -->
-            <label for="correct-answer">Correct Answer :</label>
-            <input type="text" id="correct-answer@(i)" placeholder="Answer Choice">
-            <br>
-        </div>
-        <br />
-        <hr />
+    @section Script{
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-    <!-- Diğer Sorular -->
-    <!-- ... -->
 
+<div class="container py-5">
+    <p id="content">@Html.Raw(Model.Content)</p>
+
+    @for (int i = 1; i <= 4; i++)
+    {
+        <div class="question-container">
+            <div class="question">
+                <label for="question@(i)"><b>Question @i :</b></label>
+                <textarea id="question@(i)" name="question@(i)" placeholder="Your question..."></textarea>
+                <div class="options-container">
+                    <input type="text" id="option@(i)_1" class="answer-option" placeholder="A">
+                    <input type="text" id="option@(i)_2" class="answer-option" placeholder="B">
+                    <input type="text" id="option@(i)_3" class="answer-option" placeholder="C">
+                    <input type="text" id="option@(i)_4" class="answer-option" placeholder="D">
+                </div>
+                <div class="correct-answer-container">
+                    <label for="correct-answer-select@(i)">Correct Answer:</label>
+                    <select id="correct-answer-select@(i)" class="answer-option" onchange="setCorrectAnswer(this.value, 'correct-answer@(i)')">
+                        <option value="">Choose...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <input type="hidden" id="correct-answer@(i)" name="correct-answer@(i)">
+                </div>
+            </div>
+        </div>
+    }
+    <button type="button" onclick="CreateExam()" class="btn-primary">Create Exam</button>
 </div>
-<button type="button" onclick="CreateExam()" class="btn btn-primary">Create Exam</button>
-
+<script>
+    function setCorrectAnswer(value, inputId) {
+        var input = document.getElementById(inputId);
+        input.value = value;
+    }
+</script>

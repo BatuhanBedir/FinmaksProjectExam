@@ -5,6 +5,15 @@ $(document).ready(function () {
     if (window.location == "https://localhost:7050/Exam/Index") {
         ExamList();
     }
+    if (sessionStorage.getItem("token") != null) {
+        $('#logoutButton').show();
+        $('#loginButton').hide();
+        $('#examButton').show();
+    } else {
+        $('#logoutButton').hide();
+        $('#examButton').hide();
+        $('#loginButton').show();
+    }
 });
 
 function GoToExamIndex() {
@@ -227,11 +236,19 @@ function CreateExam() {
             data: JSON.stringify(examDto),
             contentType: 'application/json',
             success: function (data) {
-                console.log(ExamList());
                 ExamList();
             },
-            error: function (error) {
-                console.log(error);
+            error: function (xhr) {
+                try {
+                    var errorResponse = JSON.parse(xhr.responseText);
+                    if (errorResponse && errorResponse.errors) {
+                        $('#fail').text(errorResponse.errors).css('color', 'red');
+                    } else {
+                        $('#fail').text(xhr.error).css('color', 'red');
+                    }
+                } catch (error) {
+                    $('#fail').text('An error occurred while processing the response.').css('color', 'red');
+                }
             }
         });
     } else {
@@ -239,21 +256,27 @@ function CreateExam() {
     }
 }
 function ExamList() {
+    var role = sessionStorage.getItem("role")
     var myUrl = baseUrl + "Exam/GetAllExam";
-    $.ajax({
-        url: myUrl,
-        type: "GET",
-        headers: {
-            "Authorization": 'Bearer ' + sessionStorage.getItem("token")
-        },
-        success: function (response) {
-            GetExamListPartial(response.data);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(xhr.responseText);
-        }
-    });
+    if (role != null) {
+        $.ajax({
+            url: myUrl,
+            type: "GET",
+            headers: {
+                "Authorization": 'Bearer ' + sessionStorage.getItem("token")
+            },
+            success: function (response) {
+                GetExamListPartial(response.data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(xhr.responseText);
+            }
+        });
+    } else {
+        GoToAccountLogin();
+    }
+
 }
 function GetExamListPartial(exams) {
     var myUrl = "/Exam/GetExamListPartial";
@@ -294,7 +317,6 @@ function DeleteExam(id) {
 
     });
 }
-
 function TakeTheExam(id) {
     var myUrl = baseUrl + "Exam/" + id;
     $.ajax({
@@ -312,7 +334,6 @@ function TakeTheExam(id) {
 
     });
 }
-
 function UserExamList(exams) {
     var myUrl = "/Exam/GetUserExamListPartial";
 
@@ -330,4 +351,24 @@ function UserExamList(exams) {
         }
 
     });
+}
+function Logout() {
+    var myUrl = "/Account/Logout";
+
+    $.ajax({
+        url: myUrl,
+        type: "POST",
+        headers: {
+            "Authorization": 'Bearer ' + sessionStorage.getItem("token")
+        },
+        success: function () {
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("role");
+            GoToAccountLogin();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(xhr.responseText);
+        }
+    })
 }

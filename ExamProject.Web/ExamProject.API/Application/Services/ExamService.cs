@@ -3,7 +3,6 @@ using ExamProject.API.Application.DTOs;
 using ExamProject.API.Application.IInterfaces;
 using ExamProject.API.Core.Entities;
 using ExamProject.API.Core.Interfaces;
-using Microsoft.AspNetCore.Server.IIS.Core;
 using System.Net;
 
 namespace ExamProject.API.Application.Services;
@@ -20,6 +19,17 @@ public class ExamService : IExamService
         _mapper = mapper;
     }
 
+
+    /// <summary>
+    /// Creates a new exam based on the provided ExamDto, including validation for unique answer options.
+    /// </summary>
+    /// <param name="examDto">The ExamDto containing information about the exam to be created.</param>
+    /// <returns>
+    /// A CustomResponseDto<ExamDto> indicating the result of the exam creation operation.
+    /// - If successful, returns a response with HTTP status code 201 (Created).
+    /// - If the answer options are not unique, returns a response with HTTP status code 400 (Bad Request).
+    /// - If an error occurs during the creation process, returns a response with HTTP status code 500 (Internal Server Error).
+    /// </returns>
     public async Task<CustomResponseDto<ExamDto>> CreateExam(ExamDto examDto)
     {
         try
@@ -64,6 +74,14 @@ public class ExamService : IExamService
         }
     }
 
+    /// <summary>
+    /// Retrieves a list of all exams and maps them to GetExamDto objects.
+    /// </summary>
+    /// <returns>
+    /// A CustomResponseDto<List<GetExamDto>> indicating the result of the operation.
+    /// - If successful, returns a response with HTTP status code 200 (OK) along with the list of exams.
+    /// - If an error occurs during the retrieval process, returns a response with HTTP status code 500 (Internal Server Error).
+    /// </returns>
     public async Task<CustomResponseDto<List<GetExamDto>>> GetAllExam()
     {
         try
@@ -78,10 +96,18 @@ public class ExamService : IExamService
         {
             return CustomResponseDto<List<GetExamDto>>.Fail($"An error occurred: {ex.Message}", HttpStatusCode.InternalServerError.GetHashCode());
         }
-
-
     }
 
+    /// <summary>
+    /// Deletes an exam with the specified ID.
+    /// </summary>
+    /// <param name="id">The ID of the exam to be deleted.</param>
+    /// <returns>
+    /// A CustomResponseDto<bool> indicating the result of the deletion operation.
+    /// - If the exam is successfully deleted, returns a response with HTTP status code 200 (OK).
+    /// - If the exam is not found, returns a response with HTTP status code 404 (Not Found).
+    /// - If an error occurs during the deletion process, returns a response with HTTP status code 500 (Internal Server Error).
+    /// </returns>
     public async Task<CustomResponseDto<bool>> DeleteExam(int id)
     {
         try
@@ -102,6 +128,16 @@ public class ExamService : IExamService
         }
     }
 
+    /// <summary>
+    /// Retrieves an exam by its ID, including associated questions and choices, and maps it to an ExamDto.
+    /// </summary>
+    /// <param name="id">The ID of the exam to be retrieved.</param>
+    /// <returns>
+    /// A CustomResponseDto<ExamDto> indicating the result of the retrieval operation.
+    /// - If the exam is successfully found, returns a response with HTTP status code 200 (OK) along with the mapped ExamDto.
+    /// - If the exam is not found, returns a response with HTTP status code 404 (Not Found).
+    /// - If an error occurs during the retrieval process, returns a response with HTTP status code 500 (Internal Server Error).
+    /// </returns>
     public async Task<CustomResponseDto<ExamDto>> GetByIdExamIncludeQuestionAndChoiceAsync(int id)
     {
         try

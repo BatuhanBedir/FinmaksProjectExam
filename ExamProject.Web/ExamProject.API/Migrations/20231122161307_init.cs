@@ -232,8 +232,8 @@ namespace ExamProject.API.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "4c5a7bb0-1c5e-440e-9a8e-0d4df4845b91", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAECk1Iixob+y6nG+1TZOEBsbwqEliHLzsEqzAWwp8YgxhpkdqxpIl9RzjKo2A94+UbQ==", null, false, null, false, "admin@admin.com" },
-                    { 2, 0, "2e85ba00-720a-4111-9298-3f5671da80e6", "user@user.com", true, false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEBvc0df5rl19+I5n4hTxmJr5Y1ik33LpbWBxxccrtv+J0yC2CFk5jaslmv9AT3/AVQ==", null, false, null, false, "user@user.com" }
+                    { 1, 0, "593656a3-36dd-438b-a952-2dfc28f85a5a", "admin@admin.com", true, false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAED1xR3wOcxAkH7WTnhlaSGM1mPZR0MgpxcMzq8jKRzhIk6llE8928TZrJcHPUbQJpg==", null, false, null, false, "admin@admin.com" },
+                    { 2, 0, "04b78b73-44f6-46f3-b6eb-df8bc62490eb", "user@user.com", true, false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEOT72H+52B0R+eI151HxuxwSnijDVcOAW71Tq8hZH8H1HqeoHl9ypDzW324JA4EDbQ==", null, false, null, false, "user@user.com" }
                 });
 
             migrationBuilder.InsertData(
